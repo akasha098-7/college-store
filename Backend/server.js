@@ -6,13 +6,22 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Import Routes (Put these BEFORE app.listen)
+const authRoutes = require('./routes/authRoutes');
+const productRoutes = require('./routes/productRoutes');
+const orderRoutes = require('./routes/orderRoutes');
+
+// Use Routes
+app.use('/api/auth', authRoutes);
+app.use('/api', productRoutes);
+app.use('/api', orderRoutes);
+
 // A test route to make sure everything is working
 app.get('/test', (req, res) => {
     res.send('Backend Server is Live and Connected!');
 });
 
-const PORT = 3000;
-// Test route to fetch products from the database
+// Test route to fetch products
 app.get('/test-products', (req, res) => {
     const sql = "SELECT * FROM products";
     db.query(sql, (err, results) => {
@@ -26,6 +35,9 @@ app.get('/test-products', (req, res) => {
         });
     });
 });
+
+const PORT = 3000;
+
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
