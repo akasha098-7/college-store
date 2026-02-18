@@ -12,6 +12,20 @@ app.get('/test', (req, res) => {
 });
 
 const PORT = 3000;
+// Test route to fetch products from the database
+app.get('/test-products', (req, res) => {
+    const sql = "SELECT * FROM products";
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error("Error fetching products:", err);
+            return res.status(500).json({ error: err.message });
+        }
+        res.json({
+            message: "Database is definitely working!",
+            data: results
+        });
+    });
+});
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
