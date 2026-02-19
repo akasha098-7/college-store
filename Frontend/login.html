@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuickPick — User Portal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/login.css">
+
+</head>
+
+<body>
+
+<div class="card">
+  <div class="cart-bg">🛒</div>
+
+  <div class="top">
+    <div class="logo">
+      <img src="QUICKPICKlogo.png" alt="QuickPick Logo">
+    </div>
+
+    <div class="title">COLLEGE STORE · USER</div>
+  </div>
+
+  <div class="form">
+
+    <div class="user-box">User Login</div>
+
+    <div class="switch">
+      <button id="signBtn" class="active">Sign In</button>
+      <button id="regBtn">Register</button>
+    </div>
+
+    <!-- SIGN IN -->
+    <div id="signin">
+
+      <label>ADMISSION NUMBER</label>
+      <input placeholder="e.g. CS22B001">
+
+      <label>PASSWORD</label>
+      <input type="password" placeholder="Your password">
+
+      <button class="main-btn" onclick="signIn()">Sign In to QuickPick →</button>
+
+    </div>
+
+    <!-- REGISTER -->
+    <div id="register" class="register-fields">
+
+      <div class="row">
+        <div>
+          <label>FIRST NAME</label>
+          <input placeholder="First name">
+        </div>
+
+        <div>
+          <label>LAST NAME</label>
+          <input placeholder="Last name">
+        </div>
+      </div>
+
+      <label>ADMISSION NUMBER</label>
+      <input placeholder="Admission number">
+
+      <label>PASSWORD</label>
+      <input type="password" placeholder="Create password">
+
+      <label>CONFIRM PASSWORD</label>
+      <input type="password" placeholder="Confirm password">
+
+      <label>CONTACT</label>
+
+      <div class="contact">
+        <button id="emailBtn">📧 Email</button>
+        <button id="phoneBtn" class="active">📱 Phone</button>
+      </div>
+
+      <input id="contactInput" placeholder="10-digit mobile number">
+
+      <button class="main-btn" onclick="validateRegister()">Create My Account 🚀</button>
+
+    </div>
+
+  </div>
+</div>
+
+<script src="js/login.js"></script>
+
+
+</body>
+</html>
