@@ -1,43 +1,28 @@
 const express = require('express');
 const db = require('./db');
-const cors = require('cors'); // Helps frontend talk to backend
+const cors = require('cors');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Import Routes (Put these BEFORE app.listen)
+// 1. Import Routes
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 
-// Use Routes
+// 2. Use Routes
+// Note: We use '/api' to keep things consistent for your teammates
 app.use('/api/auth', authRoutes);
 app.use('/api', productRoutes);
-app.use('/api', orderRoutes);
+app.use('/api/orders', orderRoutes);
 
-// A test route to make sure everything is working
-app.get('/test', (req, res) => {
-    res.send('Backend Server is Live and Connected!');
-});
-
-// Test route to fetch products
-app.get('/test-products', (req, res) => {
-    const sql = "SELECT * FROM products";
-    db.query(sql, (err, results) => {
-        if (err) {
-            console.error("Error fetching products:", err);
-            return res.status(500).json({ error: err.message });
-        }
-        res.json({
-            message: "Database is definitely working!",
-            data: results
-        });
-    });
+// 3. Simple Status Check
+app.get('/', (req, res) => {
+    res.send('College Store Backend is Running!');
 });
 
 const PORT = 3000;
-
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
