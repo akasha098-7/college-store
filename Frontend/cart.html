@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuickPick — Cart</title>
+
+<link rel="stylesheet" href="css/cart.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="top-bar">
+  <div class="top-bar-logo">
+    <img src="QUICKPICKlogo.png" alt="QuickPick">
+    <div>
+      <div class="top-bar-brand">Quick<span>Pick</span></div>
+      <div class="top-bar-sub">WHERE CONVENIENCE MEETS SPEED</div>
+    </div>
+  </div>
+
+  <button class="profile-btn" onclick="goProfile()">
+    <svg viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="4"/>
+      <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+    </svg>
+  </button>
+</header>
+
+<!-- ===== CART CONTENT ===== -->
+<div class="cart-page">
+
+  <div id="cartItems"></div>
+
+  <!-- SUMMARY -->
+  <div class="summary">
+    <div class="summary-row">
+      <span>Items (<span id="itemCount">0</span>)</span>
+      <span id="subtotal">₹0</span>
+    </div>
+
+    <hr>
+
+    <div class="summary-total">
+      <span>Total</span>
+      <span id="totalAmount">₹0</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== PAY BAR ===== -->
+<div class="pay-bar" onclick="goToPayment()">
+  💳 Proceed to Pay • <span id="payAmount">₹0</span>
+</div>
+
+<!-- ===== BOTTOM NAV ===== -->
+<!-- BOTTOM NAV — EXACT STYLE -->
+<nav class="bottom-nav">
+
+<!-- HOME -->
+  <button class="nav-item"
+        onclick="location.href='home.html'">
+    <div class="nav-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+        <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+        <path d="M9 21V12h6v9"/>
+      </svg>
+    </div>
+    <span class="nav-label">Home</span>
+  </button>
+
+  <!-- CATEGORIES -->
+
+ <button class="nav-item"
+        onclick="location.href='categories.html'">
+    <div class="nav-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+        <rect x="3" y="3" width="7" height="7" rx="1"/>
+        <rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/>
+        <rect x="14" y="14" width="7" height="7" rx="1"/>
+      </svg>
+    </div>
+    <span class="nav-label">Categories</span>
+  </button>
+
+  <!-- CART -->
+  <button class="nav-item active">
+    <div class="nav-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 0 1-8 0"/>
+      </svg>
+      <span class="cart-badge" id="cartBadge"></span>
+    </div>
+    <span class="nav-label">Cart</span>
+  </button>
+
+  <!-- ⭐ ORDERS (NEW) -->
+   <button class="nav-item"
+        onclick="location.href='orders.html'">
+    <div class="nav-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+        <path d="M6 2h9l5 5v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="8" y1="13" x2="16" y2="13"/>
+        <line x1="8" y1="17" x2="16" y2="17"/>
+      </svg>
+      <span class="cart-badge"></span> <!-- optional -->
+    </div>
+    <span class="nav-label">Orders</span>
+  </button>
+  
+</nav>
+<!-- HOME -->
+<button class="nav-item"
+        onclick="location.href='home.html'">
+
+<!-- CATEGORIES -->
+<button class="nav-item"
+        onclick="location.href='categories.html'">
+
+<!-- CART -->
+<button class="nav-item"
+        onclick="location.href='cart.html'">
+
+<!-- ORDERS -->
+<button class="nav-item"
+        onclick="location.href='orders.html'">
+
+<script src="js/cart.js"></script>
+
+</body>
+</html>

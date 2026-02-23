@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Confirmed — QuickPick</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/confirmation.css">
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<div class="top">
+  <div class="brand">QuickPick</div>
+  <div class="sub">Order Confirmed</div>
+</div>
+
+<!-- MAIN CARD -->
+<div class="card">
+
+  <div class="check">
+    <svg viewBox="0 0 24 24">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+  </div>
+
+  <div class="title">Order Placed!</div>
+  <div class="subtext">Your order is being prepared</div>
+
+  <div class="divider"></div>
+
+  <div class="label">Order Number</div>
+  <div class="orderNo" id="orderNumber">QP001</div>
+
+  <div class="pickupBox">
+    <div class="pickLabel">Pickup Code</div>
+    <div class="pickCode" id="pickupCode">----</div>
+    <div class="hint">Show this at the store to collect your items</div>
+  </div>
+
+  <button class="homeBtn" onclick="goHome()">Back to Home</button>
+
+</div>
+
+<script src="js/confirmation.js"></script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+body{
+  margin:0;
+  font-family:"Nunito Sans",sans-serif;
+  background:#f5f5f5;
+}
+
+/* HEADER */
+
+/* HEADER — FIXED */
+
+.top-bar{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:70px;
+  background:#ffc800;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 18px;
+  z-index:1000;
+  box-shadow:0 2px 10px rgba(0,0,0,0.08);
+}
+
+/* LOGO AREA */
+
+.top-bar-logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;           /* prevents overflow gap */
+}
+
+.top-bar-logo img{
+  width:44px;
+  height:44px;
+  object-fit:contain;
+  border-radius:10px;
+  display:block;         /* removes white gap */
+}
+
+/* BRAND TEXT */
+
+.top-bar-brand{
+  font-family:"Nunito", sans-serif;
+  font-size:24px;
+  font-weight:900;
+  color:#d9533f;
+}
+
+.top-bar-brand span{
+  color:#000;
+}
+
+.top-bar-sub{
+  font-size:12px;
+  font-weight:700;
+  color:#b13a2c;
+  letter-spacing:.5px;
+}
+
+/* PROFILE BUTTON */
+
+.profile-btn{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  background:#d9533f;
+  border:none;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,0.25);
+}
+
+/* SVG ICON */
+
+.profile-btn svg{
+  width:24px;
+  height:24px;
+  fill:#ffffff;          /* IMPORTANT */
+}
+
+/* SCROLL AREA */
+
+.page-scroll{
+  padding-top:80px;
+  padding-bottom:60px;   /* ⭐ REQUIRED */
+}
+
+/* ORDERS LIST */
+
+.orders-container{
+  padding:16px;
+  padding-bottom:80px;
+}
+
+/* ORDER CARD */
+
+.order-card{
+  background:white;
+  border-radius:18px;
+  margin-bottom:16px;
+  box-shadow:0 3px 14px rgba(0,0,0,.07);
+  overflow:hidden;
+}
+
+/* HEADER */
+
+.order-header{
+  background:#FFC800;
+  padding:12px 16px;
+  display:flex;
+  justify-content:space-between;
+}
+
+.order-num{
+  font-weight:900;
+  color:#D9533F;
+}
+
+.order-date{
+  font-size:12px;
+  color:#b04a37;
+}
+
+/* BODY */
+
+.order-body{
+  padding:14px;
+}
+
+.pickup-box{
+  background:#fff5f3;
+  border:1.5px dashed #D9533F;
+  border-radius:10px;
+  padding:10px;
+  margin-bottom:12px;
+}
+
+.pickup-code{
+  font-size:24px;
+  font-weight:900;
+  color:#D9533F;
+}
+
+/* ITEMS */
+
+.item{
+  display:flex;
+  justify-content:space-between;
+  padding:4px 0;
+  font-size:14px;
+}
+
+/* TOTAL */
+
+.total{
+  border-top:1px dashed #ddd;
+  margin-top:8px;
+  padding-top:8px;
+  font-weight:900;
+  display:flex;
+  justify-content:space-between;
+}
+
+.total span:last-child{
+  color:#D9533F;
+}
+
+* NAV */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;width:100%;
+  height:64px;
+  background:white;
+  border-top:1px solid #eee;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+}
+
+.nav-item{display:flex;flex-direction:column;align-items:center;font-weight:700;}
+
+.nav-icon{
+  position: relative;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+}
+
+/* CART BADGE */
+.cart-badge{
+  position:absolute;
+  top:-4px;
+  right:-6px;
+  width:16px;
+  height:16px;
+  background:#d9533f;
+  color:white;
+  font-size:9px;
+  font-weight:900;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  border:1.5px solid white;
+}
+/* TOAST */
+
+.cart-toast{
+  position:fixed;
+  bottom:80px;
+  left:50%;
+  transform:translateX(-50%);
+  background:black;
+  color:white;
+  padding:10px 18px;
+  border-radius:20px;
+  opacity:0;
+  transition:.3s;
+}
+
+.cart-toast.show{opacity:1;}
+/* ===== EXACT BOTTOM NAV STYLE ===== */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:64px;
+  background:#fff;
+  border-top:1px solid #f0e8d0;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  z-index:100;
+  box-shadow:0 -4px 20px rgba(0,0,0,0.08);
+}
+
+.nav-item{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  position:relative;
+}
+
+.nav-icon{
+  width:26px;
+  height:26px;
+  display:grid;
+  place-items:center;
+  position:relative;
+}
+
+.nav-icon svg{
+  width:24px;
+  height:24px;
+  stroke:#7a6f58;
+}
+
+/* Label */
+.nav-label{
+  font-family:'Nunito',sans-serif;
+  font-size:11px;
+  font-weight:700;
+  color:#7a6f58;
+}
+
+/* ACTIVE ITEM */
+.nav-item.active .nav-label{
+  color:#d9533f;
+}
+
+.nav-item.active .nav-icon svg{
+  stroke:#d9533f;
+}
+
+/* /* NAV ITEM */
+.nav-item{
+  position: relative;
+  height: 100%;        /* important */
+  justify-content: center;
+}
+
+/* ACTIVE RED LINE — FIXED AT NAV TOP */
+.nav-item.active::before{
+  content:'';
+  position:absolute;
+
+  top:0;               /* EXACT TOP of nav */
+  left:50%;
+  transform:translateX(-50%);
+
+  width:34px;
+  height:3px;
+
+  background:#D9533F;
+  border-radius:0 0 4px 4px;
+}
+
+/* Smooth animation */
+.nav-item {
+  transition: transform 0.10s ease;
+}
+
+/* Raise on hover */
+.nav-item:hover {
+  transform: translateY(-4px);
+}
+.nav-icon {
+  transition: transform 0.10s ease;
+}
+
+.nav-item:hover .nav-icon {
+  transform: translateY(-4px);
+} 

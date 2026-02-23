@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment — QuickPick</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/payment.css">
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <button class="back" onclick="goBack()">←</button>
+  <div class="title">💳 Payment</div>
+</div>
+
+<!-- ORDER SUMMARY -->
+<div class="section">
+  <h4>ORDER SUMMARY</h4>
+
+  <!-- 🔥 Cart items will load here -->
+  <div class="card" id="payOrderSummary"></div>
+</div>
+
+<!-- PAYMENT METHOD -->
+<div class="section">
+  <h4>PAYMENT METHOD</h4>
+
+  <div class="method selected" id="cash" onclick="selectMethod('cash')">
+    <div class="icon">💵</div>
+    <div>
+      <div class="name">Cash</div>
+      <div class="sub">Pay at the store counter</div>
+    </div>
+  </div>
+
+  <div class="method" id="upi" onclick="selectMethod('upi')">
+    <div class="icon">📲</div>
+    <div>
+      <div class="name">UPI Payment</div>
+      <div class="sub">GPay, PhonePe, Paytm & more</div>
+    </div>
+  </div>
+
+  <div id="upiBox">
+    <input type="text" id="upiId" placeholder="Enter UPI ID (e.g. name@upi)">
+  </div>
+</div>
+
+<!-- ACTION BUTTONS -->
+<div class="actions">
+  <button class="place" onclick="placeOrder()">🎫 Place Order</button>
+  <button class="backBtn" onclick="goBack()">← Back to Cart</button>
+</div>
+
+<script src="js/payment.js"></script>
+
+</body>
+</html>

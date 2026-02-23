@@ -1,0 +1,398 @@
+*{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --yellow:#ffc800;
+  --red:#d9533f;
+  --bg:#f5f5f5;
+  --text:#1e1a0e;
+  --muted:#7a6f58;
+}
+
+body{
+  font-family:"Nunito Sans",sans-serif;
+  background:var(--bg);
+}
+
+/* HEADER */
+
+/* HEADER — FIXED */
+
+.top-bar{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:70px;
+  background:#ffc800;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 18px;
+  z-index:1000;
+  box-shadow:0 2px 10px rgba(0,0,0,0.08);
+}
+
+/* LOGO AREA */
+
+.top-bar-logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;           /* prevents overflow gap */
+}
+
+.top-bar-logo img{
+  width:44px;
+  height:44px;
+  object-fit:contain;
+  border-radius:10px;
+  display:block;         /* removes white gap */
+}
+
+/* BRAND TEXT */
+
+.top-bar-brand{
+  font-family:"Nunito",sans-serif;
+  font-size:22px;
+  font-weight:900;
+  color:#d9533f;
+  line-height:1;
+}
+
+.top-bar-brand span{
+  color:#000;            /* Pick in black */
+}
+
+.top-bar-sub{
+  font-size:12px;
+  font-weight:700;
+  color:#b13a2c;
+  letter-spacing:.5px;
+}
+
+/* PROFILE BUTTON */
+
+.profile-btn{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  background:#d9533f;
+  border:none;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,0.25);
+}
+
+/* SVG ICON */
+
+.profile-btn svg{
+  width:24px;
+  height:24px;
+  fill:#ffffff;          /* IMPORTANT */
+}
+
+
+/* SCROLL AREA */
+
+.page-scroll{
+  padding-top:80px;
+  padding-bottom:60px;   /* ⭐ REQUIRED */
+}
+/* SEARCH */
+
+.search-wrap{background:var(--yellow);padding:10px 16px 18px;}
+
+.search-box{
+  background:white;
+  border-radius:16px;
+  padding:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.search-box input{
+  border:none;width:100%;outline:none;font-size:14px;
+}
+
+/* SECTION */
+
+.section-head{padding:20px 16px 12px;}
+
+.section-title{
+  font-family:"Nunito";
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:18px;
+}
+
+.section-title-bar{
+  width:5px;height:22px;background:var(--red);border-radius:3px;
+}
+
+.section-divider{
+  height:8px;background:#ede8dc;margin:12px 0;
+}
+
+/* PRODUCTS */
+
+.product-scroll{
+  display:flex;
+  gap:12px;
+  padding:0 16px;
+  overflow-x:auto;
+}
+
+.p-card{
+  min-width:140px;
+  background:white;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 3px 12px rgba(0,0,0,.07);
+}
+
+.p-card-img{
+  height:110px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:56px;
+  background:#f6f0d5;
+  position:relative;
+}
+
+.p-add-btn{
+  position:absolute;
+  top:8px;right:8px;
+  width:28px;height:28px;
+  border-radius:8px;
+  border:2px solid var(--yellow);
+  background:white;
+  color:var(--red);
+  font-weight:900;
+  cursor:pointer;
+}
+
+.p-out-label{
+  position:absolute;
+  bottom:0;width:100%;
+  background:#d9533f;
+  color:white;
+  font-size:11px;
+  text-align:center;
+  padding:3px 0;
+  font-weight:800;
+}
+
+.p-card-info{padding:10px;}
+
+.p-card-name{font-weight:800;font-size:13px;}
+
+.p-card-qty{font-size:11px;color:var(--muted);}
+
+.p-stock{
+  font-size:11px;
+  font-weight:700;
+  margin-top:3px;
+}
+
+.low{color:#e07b00;}
+.out{color:#d9533f;}
+.ok{color:#3aaa5c;}
+
+.p-card-price{
+  font-weight:900;
+  margin-top:5px;
+}
+
+/* PROMO */
+/* ── PROMO STRIP (COMPACT — EXACT LIKE IMAGE) ── */
+
+.promo-strip{
+  margin:14px 16px;
+  background:linear-gradient(120deg,#ffc800,#ffda00);
+  border-radius:18px;
+  padding:12px 16px;   /* 🔥 reduced */
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+/* Title */
+.promo-strip h3{
+  font-family:"Nunito";
+  font-size:16px;      /* 🔥 smaller */
+  font-weight:900;
+  margin-bottom:2px;
+  color:#1e1a0e;
+}
+
+/* Subtitle */
+.promo-strip p{
+  font-size:12px;      /* 🔥 smaller */
+  color:#b13a2c;
+  font-weight:700;
+}
+
+/* Cart icon */
+.promo-icon{
+  font-size:30px;      /* 🔥 smaller */
+}
+.promo-icon{
+  font-size: 48px;   /* 🔥 Increase size */
+}
+
+/* NAV */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;width:100%;
+  height:64px;
+  background:white;
+  border-top:1px solid #eee;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+}
+
+.nav-item{display:flex;flex-direction:column;align-items:center;font-weight:700;}
+
+.cart-badge{
+  background:#d9533f;
+  color:white;
+  border-radius:50%;
+  padding:2px 6px;
+  font-size:10px;
+}
+
+/* TOAST */
+
+.cart-toast{
+  position:fixed;
+  bottom:80px;
+  left:50%;
+  transform:translateX(-50%);
+  background:black;
+  color:white;
+  padding:10px 18px;
+  border-radius:20px;
+  opacity:0;
+  transition:.3s;
+}
+
+.cart-toast.show{opacity:1;}
+/* ===== EXACT BOTTOM NAV STYLE ===== */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:64px;
+  background:#fff;
+  border-top:1px solid #f0e8d0;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  z-index:100;
+  box-shadow:0 -4px 20px rgba(0,0,0,0.08);
+}
+
+.nav-item{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  position:relative;
+}
+
+.nav-icon{
+  width:26px;
+  height:26px;
+  display:grid;
+  place-items:center;
+  position:relative;
+}
+
+.nav-icon svg{
+  width:24px;
+  height:24px;
+  stroke:#7a6f58;
+}
+
+/* Label */
+.nav-label{
+  font-family:'Nunito',sans-serif;
+  font-size:11px;
+  font-weight:700;
+  color:#7a6f58;
+}
+
+/* ACTIVE ITEM */
+.nav-item.active .nav-label{
+  color:#d9533f;
+}
+
+.nav-item.active .nav-icon svg{
+  stroke:#d9533f;
+}
+
+/* /* NAV ITEM */
+.nav-item{
+  position: relative;
+  height: 100%;        /* important */
+  justify-content: center;
+}
+
+/* ACTIVE RED LINE — FIXED AT NAV TOP */
+.nav-item.active::before{
+  content:'';
+  position:absolute;
+
+  top:0;               /* EXACT TOP of nav */
+  left:50%;
+  transform:translateX(-50%);
+
+  width:34px;
+  height:3px;
+
+  background:#D9533F;
+  border-radius:0 0 4px 4px;
+}
+/* CART BADGE */
+.cart-badge{
+  position:absolute;
+  top:-4px;
+  right:-6px;
+  width:16px;
+  height:16px;
+  background:#d9533f;
+  color:white;
+  font-size:9px;
+  font-weight:900;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  border:1.5px solid white;
+}
+/* Smooth animation */
+.nav-item {
+  transition: transform 0.10s ease;
+}
+
+/* Raise on hover */
+.nav-item:hover {
+  transform: translateY(-4px);
+}
+.nav-icon {
+  transition: transform 0.10s ease;
+}
+
+.nav-item:hover .nav-icon {
+  transform: translateY(-4px);
+} 

@@ -1,0 +1,142 @@
+body{
+  margin:0;
+  font-family:"Nunito Sans",sans-serif;
+  background:#f5f0e8;
+}
+
+/* TOP BAR */
+
+.top{
+  background:#D9533F;
+  padding:18px 20px;
+  color:white;
+}
+
+.brand{
+  font-family:"Nunito",sans-serif;
+  font-size:20px;
+  font-weight:900;
+}
+
+.sub{
+  font-size:12px;
+  opacity:.85;
+}
+
+/* CARD */
+
+.card{
+  background:white;
+  margin:24px 18px;
+  border-radius:20px;
+  padding:32px 22px;
+  text-align:center;
+  box-shadow:0 6px 26px rgba(0,0,0,.1);
+}
+
+/* CHECK ICON */
+
+.check{
+  width:72px;
+  height:72px;
+  background:#D9533F;
+  border-radius:50%;
+  margin:0 auto 20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 6px 18px rgba(217,83,63,.35);
+}
+
+.check svg{
+  width:36px;
+  height:36px;
+  stroke:white;
+  stroke-width:3;
+  fill:none;
+}
+
+/* TEXT */
+
+.title{
+  font-family:"Nunito",sans-serif;
+  font-size:26px;
+  font-weight:900;
+}
+
+.subtext{
+  color:#7a6f58;
+  margin-top:6px;
+  margin-bottom:22px;
+}
+
+.divider{
+  height:1px;
+  background:#eee;
+  margin:22px 0;
+}
+
+/* ORDER NUMBER */
+
+.label{
+  font-size:12px;
+  font-weight:700;
+  color:#7a6f58;
+  text-transform:uppercase;
+}
+
+.orderNo{
+  font-family:"Nunito",sans-serif;
+  font-size:22px;
+  font-weight:900;
+  color:#D9533F;
+  margin-top:6px;
+  margin-bottom:18px;
+}
+
+/* PICKUP BOX */
+
+.pickupBox{
+  background:#fff5f3;
+  border:1.5px dashed #D9533F;
+  border-radius:14px;
+  padding:18px;
+  margin-bottom:24px;
+}
+
+.pickLabel{
+  font-weight:700;
+}
+
+.pickCode{
+  font-family:"Nunito",sans-serif;
+  font-size:42px;
+  font-weight:900;
+  color:#D9533F;
+  letter-spacing:4px;
+  margin:6px 0;
+}
+
+.hint{
+  font-size:12px;
+  color:#7a6f58;
+}
+
+/* BUTTON */
+
+.homeBtn{
+  background:#D9533F;
+  color:white;
+  border:none;
+  border-radius:14px;
+  padding:14px 36px;
+  font-family:"Nunito",sans-serif;
+  font-weight:900;
+  font-size:16px;
+  cursor:pointer;
+  box-shadow:0 4px 14px rgba(217,83,63,.35);
+}
+
+.homeBtn:hover{
+  background:#c44430;
+}

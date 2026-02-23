@@ -1,0 +1,156 @@
+body{
+  margin:0;
+  font-family:"Nunito Sans",sans-serif;
+  background:#f5f5f5;
+}
+
+/* HEADER */
+
+.header{
+  background:#FFC800;
+  padding:14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  position:sticky;
+  top:0;
+}
+
+.back{
+  width:36px;
+  height:36px;
+  border:none;
+  border-radius:50%;
+  background:#f3e59b;
+  cursor:pointer;
+  font-size:18px;
+}
+
+.title{
+  font-family:"Nunito",sans-serif;
+  font-weight:900;
+  color:#D9533F;
+  font-size:20px;
+}
+
+/* SECTIONS */
+
+.section{
+  padding:18px;
+}
+
+.section h4{
+  margin-bottom:10px;
+  color:#7a6f58;
+  font-weight:800;
+  font-size:13px;
+  letter-spacing:.5px;
+}
+
+/* ORDER CARD */
+
+.card{
+  background:white;
+  border-radius:16px;
+  padding:14px;
+  box-shadow:0 2px 10px rgba(0,0,0,.06);
+}
+
+.pay-order-row{
+  display:flex;
+  justify-content:space-between;
+  font-size:14px;
+  margin-bottom:8px;
+  color:#555;
+}
+
+.pay-order-row.total{
+  border-top:1px dashed #ddd;
+  padding-top:10px;
+  font-weight:900;
+  color:#222;
+}
+
+.pay-order-row.total span:last-child{
+  color:#D9533F;
+}
+
+/* PAYMENT METHODS */
+
+.method{
+  background:white;
+  padding:16px;
+  border-radius:16px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:10px;
+  cursor:pointer;
+  border:2px solid #eee;
+}
+
+.method.selected{
+  border-color:#D9533F;
+}
+
+.icon{
+  font-size:24px;
+}
+
+.name{
+  font-weight:800;
+}
+
+.sub{
+  font-size:12px;
+  color:#777;
+}
+
+/* UPI INPUT */
+
+#upiBox{
+  display:none;
+  margin-top:10px;
+}
+
+#upiBox input{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  font-size:14px;
+}
+
+/* ACTION BAR */
+
+.actions{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:white;
+  padding:14px;
+  border-top:1px solid #eee;
+}
+
+.place{
+  width:100%;
+  padding:16px;
+  background:#D9533F;
+  color:white;
+  border:none;
+  border-radius:14px;
+  font-weight:900;
+  font-size:16px;
+  margin-bottom:8px;
+}
+
+.backBtn{
+  width:100%;
+  padding:12px;
+  background:white;
+  border:1px solid #ccc;
+  border-radius:14px;
+  font-weight:700;
+  color:#777;
+}
