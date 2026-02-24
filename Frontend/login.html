@@ -7,7 +7,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="login.css">
+<link rel="stylesheet" href="css/login.css">
 
 </head>
 
@@ -37,12 +37,14 @@
     <div id="signin">
 
       <label>ADMISSION NUMBER</label>
-      <input placeholder="e.g. CS22B001">
+      <input placeholder="e.g. 2023A777">
 
       <label>PASSWORD</label>
       <input type="password" placeholder="Your password">
 
       <button class="main-btn" onclick="signIn()">Sign In to QuickPick →</button>
+   
+    
 
     </div>
 
@@ -85,8 +87,23 @@
 
   </div>
 </div>
+<!-- QUICKPICK WELCOME MODAL -->
+<div id="welcomePopup" class="qp-modal">
+  <div class="qp-box">
 
-<script src="login.js"></script>
+    <div class="qp-icon">
+      <img src="QUICKPICKlogo.png" alt="QuickPick Logo"></div>
+
+    <h2>Welcome to QuickPick</h2>
+    <p>You're successfully signed in</p>
+
+  </div>
+</div>
+<!-- THEME TOAST MESSAGE -->
+<div id="qpToast" class="qp-toast">
+  Account created successfully ✔ Please sign in
+</div>
+<script src="js/login.js"></script>
 
 
 </body>
