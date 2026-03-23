@@ -1,13 +1,29 @@
 let method = "cash";
 
 //////////////////////////////////////////////////////
-// LOAD CART DATA
+// BACKEND URL
+//////////////////////////////////////////////////////
+
+const API = "http://localhost:3000/api";
+
+//////////////////////////////////////////////////////
+// AUTH CHECK
+//////////////////////////////////////////////////////
+
+const token = localStorage.getItem("token");
+const user  = JSON.parse(localStorage.getItem("user") || "null");
+
+if (!token || !user) {
+  window.location.href = "login.html";
+}
+
+//////////////////////////////////////////////////////
+// LOAD CART DATA  (your original code, untouched)
 //////////////////////////////////////////////////////
 
 window.onload = function () {
-
   const data = localStorage.getItem("cartData");
-  const box = document.getElementById("payOrderSummary");
+  const box  = document.getElementById("payOrderSummary");
 
   if (!data) {
     box.innerHTML = "<p>Your cart is empty</p>";
@@ -15,22 +31,16 @@ window.onload = function () {
   }
 
   const cart = JSON.parse(data);
-
   let total = 0;
   box.innerHTML = "";
 
   cart.forEach(item => {
-
-    const name = item.n;
-    const price = item.p;
-    const qty = item.q;
-
-    const itemTotal = price * qty;
+    const itemTotal = item.p * item.q;
     total += itemTotal;
 
     box.innerHTML += `
       <div class="pay-order-row">
-        <span>${name} × ${qty}</span>
+        <span>${item.n} × ${item.q}</span>
         <span>₹${itemTotal}</span>
       </div>
     `;
@@ -45,93 +55,110 @@ window.onload = function () {
 };
 
 //////////////////////////////////////////////////////
-// PAYMENT METHOD
+// PAYMENT METHOD  (your original code, untouched)
 //////////////////////////////////////////////////////
 
-function selectMethod(m){
-
+function selectMethod(m) {
   method = m;
 
   document.getElementById("cash").classList.remove("selected");
   document.getElementById("upi").classList.remove("selected");
-
   document.getElementById(m).classList.add("selected");
 
-  if(m === "upi"){
-    document.getElementById("upiBox").style.display = "block";
-  } else {
-    document.getElementById("upiBox").style.display = "none";
-  }
+  document.getElementById("upiBox").style.display = m === "upi" ? "block" : "none";
 }
 
 //////////////////////////////////////////////////////
 // PLACE ORDER
 //////////////////////////////////////////////////////
 
-function placeOrder(){
-  // ===== SAVE ORDER TO HISTORY =
-  // ====
+async function placeOrder() {
 
-let orders = JSON.parse(localStorage.getItem("orders")) || [];
-
-// Generate order number
-let orderNum = "QP" + String(orders.length + 1).padStart(3, "0");
-
-// Generate pickup code
-let pickupCode = Math.floor(1000 + Math.random() * 9000);
-
-// Get current date & time
-let now = new Date();
-let dateStr = now.toLocaleDateString("en-IN") + ", " +
-              now.toLocaleTimeString("en-IN", {hour:"2-digit", minute:"2-digit"});
-
-// Get cart data
-const cart = JSON.parse(localStorage.getItem("cartData")) || [];
-
-// Calculate total
-let total = 0;
-cart.forEach(item => total += item.p * item.q);
-
-// Save order object
-orders.unshift({
-  orderNum,
-  pickupCode,
-  date: dateStr,
-  method: method === "upi" ? "📲 UPI" : "💵 Cash",
-  items: cart,
-  total
-});
-
-localStorage.setItem("orders", JSON.stringify(orders));
-// ⭐ INCREASE UNSEEN ORDER COUNT
-let unseen = parseInt(localStorage.getItem("unseenOrders") || "0");
-unseen++;
-localStorage.setItem("unseenOrders", unseen);
-
-  // Validate UPI if selected
-  if(method === "upi"){
-    let upi = document.getElementById("upiId").value.trim();
-
-    if(!upi){
+  // Validate UPI if selected (your original check)
+  if (method === "upi") {
+    const upi = document.getElementById("upiId").value.trim();
+    if (!upi) {
       alert("Please enter UPI ID");
       return;
     }
   }
 
-  // ❌ Removed alert popup
+  const cart = JSON.parse(localStorage.getItem("cartData")) || [];
 
-  // Clear cart
-  localStorage.removeItem("cartData");
-  localStorage.removeItem("cart");
+  if (cart.length === 0) {
+    alert("Your cart is empty!");
+    return;
+  }
 
-  // ✅ Go to confirmation page directly
-  window.location.href = "confirmation.html";
+  // ── 1. SAVE TO DATABASE ────────────────────────────────
+  try {
+    const items = cart.map(item => ({
+      product_id: item.id,       // real DB id saved by home.js
+      quantity:   item.q,
+      price:      item.p
+    }));
+
+    const res  = await fetch(`${API}/orders`, {
+      method:  "POST",
+      headers: {
+        "Content-Type":  "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({ items })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message || "Could not place order. Please try again.");
+      return;
+    }
+
+    // ── 2. YOUR ORIGINAL localStorage ORDER HISTORY ────────
+    let orders    = JSON.parse(localStorage.getItem("orders")) || [];
+    let orderNum  = data.order_id           // use real DB order id
+                    ? "QP" + String(data.order_id).padStart(3, "0")
+                    : "QP" + String(orders.length + 1).padStart(3, "0");
+    let pickupCode = Math.floor(1000 + Math.random() * 9000);
+
+    let now     = new Date();
+    let dateStr = now.toLocaleDateString("en-IN") + ", " +
+                  now.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" });
+
+    let total = 0;
+    cart.forEach(item => total += item.p * item.q);
+
+    orders.unshift({
+      orderNum,
+      pickupCode,
+      date:   dateStr,
+      method: method === "upi" ? "📲 UPI" : "💵 Cash",
+      items:  cart,
+      total
+    });
+
+    localStorage.setItem("orders", JSON.stringify(orders));
+
+    // ── 3. UNSEEN BADGE  (your original code, untouched) ──
+    let unseen = parseInt(localStorage.getItem("unseenOrders") || "0");
+    unseen++;
+    localStorage.setItem("unseenOrders", String(unseen));
+
+    // ── 4. CLEAR CART & REDIRECT  (your original code) ────
+    localStorage.removeItem("cartData");
+    localStorage.removeItem("cart");
+
+    window.location.href = "confirmation.html";
+
+  } catch (err) {
+    alert("Cannot connect to server. Make sure the backend is running.");
+  }
 }
-  
+
 //////////////////////////////////////////////////////
-// BACK BUTTON
+// BACK BUTTON  (your original code, untouched)
 //////////////////////////////////////////////////////
 
-function goBack(){
+function goBack() {
   window.location.href = "cart.html";
 }

@@ -1,25 +1,22 @@
-// ===== ORDER NUMBER (QP001, QP002...) =====
+// ===== READ REAL ORDER DATA FROM LOCALSTORAGE =====
+// payment.js saves the latest order as the first item in "orders"
 
-let count = parseInt(localStorage.getItem("qp_order_count") || "0");
+const orders = JSON.parse(localStorage.getItem("orders")) || [];
 
-count++;
+if (orders.length > 0) {
+  const latest = orders[0]; // most recent order is always first
 
-localStorage.setItem("qp_order_count", count);
+  document.getElementById("orderNumber").textContent = latest.orderNum;
+  document.getElementById("pickupCode").textContent  = latest.pickupCode;
 
-const orderNo = "QP" + String(count).padStart(3,'0');
-
-document.getElementById("orderNumber").textContent = orderNo;
-
-
-// ===== RANDOM PICKUP CODE =====
-
-const code = Math.floor(1000 + Math.random() * 9000);
-
-document.getElementById("pickupCode").textContent = code;
-
+} else {
+  // Fallback if somehow orders is empty
+  document.getElementById("orderNumber").textContent = "QP???";
+  document.getElementById("pickupCode").textContent  = "----";
+}
 
 // ===== BACK TO HOME =====
 
-function goHome(){
+function goHome() {
   window.location.href = "home.html";
 }

@@ -1,20 +1,24 @@
-const productController = require('../controllers/productController');
-const db = require('../db');
+const db = require("../db");
 
 // GET all products
 exports.getAllProducts = (req, res) => {
-    db.query("SELECT * FROM products", (err, results) => {
-        if (err) return res.status(500).json({ error: err });
-        res.json(results);
-    });
+  db.query("SELECT * FROM products ORDER BY category, name", (err, results) => {
+    if (err) return res.status(500).json({ error: err });
+    res.json(results);
+  });
 };
 
-// ADD product
+// ADD product (used by admin)
 exports.addProduct = (req, res) => {
-    const { name, price, stock } = req.body;
-    const sql = "INSERT INTO products (name, price, stock) VALUES (?, ?, ?)";
-    db.query(sql, [name, price, stock], (err, result) => {
-        if (err) return res.status(500).json({ error: err });
-        res.json({ message: "Product added successfully!" });
-    });
+  const { name, price, stock, category } = req.body;
+
+  if (!name || !price || !stock || !category) {
+    return res.status(400).json({ message: "All fields required: name, price, stock, category" });
+  }
+
+  const sql = "INSERT INTO products (name, price, stock, category) VALUES (?, ?, ?, ?)";
+  db.query(sql, [name, price, stock, category], (err, result) => {
+    if (err) return res.status(500).json({ error: err });
+    res.json({ message: "Product added successfully!", id: result.insertId });
+  });
 };
