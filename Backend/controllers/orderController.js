@@ -1,5 +1,10 @@
 const db = require("../db");
-
+exports.testOrdersRaw = (req, res) => {
+  db.query("SELECT * FROM orders", (err, result) => {
+    if (err) return res.status(500).json(err);
+    res.json(result);
+  });
+};
 // ─── PLACE ORDER ─────────────────────────────────────────────────────────────
 // POST /api/orders
 exports.placeOrder = (req, res) => {
@@ -92,5 +97,66 @@ exports.getMyOrders = (req, res) => {
     });
 
     res.json(Object.values(grouped));
+  });
+};
+//get all orders(admin)
+exports.getAllOrders = (req, res) => {
+  const sql = `
+    SELECT o.id, o.user_id, o.total_amount, o.status, o.order_date,
+           oi.product_id, oi.quantity, oi.price, p.name AS product_name
+    FROM orders o
+    LEFT JOIN order_items oi ON o.id = oi.order_id
+    LEFT JOIN products p ON oi.product_id = p.id
+    ORDER BY o.order_date DESC
+  `;
+
+  db.query(sql, (err, rows) => {
+    if (err) return res.status(500).json({ message: "Error fetching orders" });
+
+    const grouped = {};
+    rows.forEach(row => {
+      if (!grouped[row.id]) {
+        grouped[row.id] = {
+          id: row.id,
+          user_id: row.user_id,
+          total_amount: row.total_amount,
+          status: row.status,
+          order_date: row.order_date,
+          items: []
+        };
+      }
+
+      grouped[row.id].items.push({
+        product_name: row.product_name,
+        quantity: row.quantity,
+        price: row.price
+      });
+    });
+
+    res.json(Object.values(grouped));
+  });
+};
+//Update order status
+exports.updateOrderStatus = (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  db.query(
+    "UPDATE orders SET status = ? WHERE id = ?",
+    [status, id],
+    (err) => {
+      if (err) return res.status(500).json({ message: "Update failed" });
+
+      res.json({ message: "Order status updated" });
+    }
+  );
+};
+// ✅ TEST FUNCTION (FINAL — OUTSIDE EVERYTHING)
+exports.testOrdersRaw = (req, res) => {
+  const db = require("../db");
+
+  db.query("SELECT * FROM orders", (err, result) => {
+    if (err) return res.status(500).json(err);
+    res.json(result);
   });
 };

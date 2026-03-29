@@ -1,12 +1,14 @@
-require('dotenv').config();
-
+require('dotenv').config({ path: __dirname + '/.env' });
+console.log("ENV TEST:", process.env.JWT_SECRET);
 const express = require('express');
 const cors = require('cors');
 
 const app = express();
 
 console.log("🚀 CLEAN SERVER RUNNING");
+const fs = require('fs');
 
+console.log("ENV FILE EXISTS:", fs.existsSync(__dirname + '/.env'));
 // ✅ MIDDLEWARE
 app.use(cors());
 app.use(express.json());
