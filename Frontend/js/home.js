@@ -1,13 +1,11 @@
 //////////////////////////////////////////////////////////
-// AUTH GUARD — redirect to login if not logged in
+// AUTH GUARD
 //////////////////////////////////////////////////////////
 
 const token = localStorage.getItem("token");
 const user  = JSON.parse(localStorage.getItem("user") || "null");
 
-if (!token || !user) {
-  window.location.href = "login.html";
-}
+if (!token || !user) window.location.href = "login.html";
 
 //////////////////////////////////////////////////////////
 // BACKEND URL
@@ -16,13 +14,33 @@ if (!token || !user) {
 const API = "http://localhost:3000/api";
 
 //////////////////////////////////////////////////////////
+// EMOJI MAP
+//////////////////////////////////////////////////////////
+
+const categoryEmoji = {
+  "Stationary": "✏️",
+  "Books":      "📚",
+  "Beverages":  "☕",
+  "Snacks":     "🍿",
+  "Ice Cream":  "🍦",
+  "Chocolate":  "🍫",
+  "Uniform":    "👕"
+};
+
+const stationeryCategories = ["Stationary", "Books"];
+const foodCategories       = ["Beverages", "Snacks", "Ice Cream", "Chocolate"];
+
+let allProducts = [];
+let searchQuery = ""; // current search text
+
+//////////////////////////////////////////////////////////
 // STOCK LABEL  (your original code, untouched)
 //////////////////////////////////////////////////////////
 
 function stockLabel(q) {
-  if (q === 0)  return { text: "❌ Out of stock",      cls: "out" };
-  if (q <= 5)   return { text: `⚠️ Only ${q} left`,   cls: "low" };
-  return              { text: `✅ ${q} in stock`,      cls: "ok"  };
+  if (q === 0)  return { text: "❌ Out of stock",    cls: "out" };
+  if (q <= 5)   return { text: `⚠️ Only ${q} left`, cls: "low" };
+  return              { text: `✅ ${q} in stock`,    cls: "ok"  };
 }
 
 //////////////////////////////////////////////////////////
@@ -51,80 +69,93 @@ function buildCard(p) {
 }
 
 //////////////////////////////////////////////////////////
-// EMOJI MAP — matches your DB category names
+// SEARCH — filters products by name or category
 //////////////////////////////////////////////////////////
 
-const categoryEmoji = {
-  "Stationary":  "✏️",
-  "Books":       "📚",
-  "Beverages":   "☕",
-  "Snacks":      "🍿",
-  "Ice Cream":   "🍦",
-  "Chocolate":   "🍫",
-  "Uniform":     "👕"
-};
+function setupSearch() {
+  const searchInput = document.querySelector(".search-box input");
+  if (!searchInput) return;
 
-// Categories shown on HOME page (stationery + food sections)
-const stationeryCategories = ["Stationary", "Books"];
-const foodCategories       = ["Beverages", "Snacks", "Ice Cream", "Chocolate"];
-
-//////////////////////////////////////////////////////////
-// LOAD PRODUCTS FROM BACKEND
-//////////////////////////////////////////////////////////
-
-let allProducts = []; // keep a copy for addToCart lookups
-
-async function loadProducts() {
-  try {
-    const res  = await fetch(`${API}/products`);
-    const data = await res.json();
-
-    // Attach an emoji to each product based on its category
-    allProducts = data.map(p => ({
-      ...p,
-      emoji: categoryEmoji[p.category] || "🛍️"
-    }));
-
+  searchInput.addEventListener("input", (e) => {
+    searchQuery = e.target.value.trim().toLowerCase();
     renderAll();
-    updateCartBadge();
+  });
+}
 
-  } catch (err) {
-    console.error("Could not load products:", err);
+function filterProducts(products) {
+  if (!searchQuery) return products;
+  return products.filter(p =>
+    p.name.toLowerCase().includes(searchQuery) ||
+    p.category.toLowerCase().includes(searchQuery)
+  );
+}
+
+//////////////////////////////////////////////////////////
+// RENDER ALL PRODUCTS
+//////////////////////////////////////////////////////////
+
+function renderAll() {
+  const stationery = filterProducts(
+    allProducts.filter(p => stationeryCategories.includes(p.category))
+  );
+  const food = filterProducts(
+    allProducts.filter(p => foodCategories.includes(p.category))
+  );
+
+  // ── If searching, show all results in one section ──
+  if (searchQuery) {
+    const allResults = filterProducts(allProducts);
+
     document.getElementById("scroll-stationery").innerHTML =
-      "<p style='padding:16px;color:#aaa'>Could not load products. Is the server running?</p>";
+      allResults.length
+        ? allResults.map(buildCard).join("")
+        : `<p style="padding:16px;color:#aaa">No products found for "${searchQuery}"</p>`;
+
+    // Hide food section header and show everything in stationery section
+    document.getElementById("scroll-food").innerHTML = "";
+
+    // Update section titles
+    const heads = document.querySelectorAll(".section-head");
+    if (heads[0]) heads[0].querySelector(".section-title").innerHTML =
+      `<div class="section-title-bar"></div> 🔍 Results for "${searchQuery}"`;
+    if (heads[1]) heads[1].style.display = "none";
+
+  } else {
+    // Normal view — restore section titles
+    const heads = document.querySelectorAll(".section-head");
+    if (heads[0]) heads[0].querySelector(".section-title").innerHTML =
+      `<div class="section-title-bar"></div> ✏️ Stationery`;
+    if (heads[1]) {
+      heads[1].style.display = "block";
+      heads[1].querySelector(".section-title").innerHTML =
+        `<div class="section-title-bar"></div> 🍽️ Food & Drinks`;
+    }
+
+    document.getElementById("scroll-stationery").innerHTML =
+      stationery.length
+        ? stationery.map(buildCard).join("")
+        : `<p style="padding:16px;color:#aaa">No items</p>`;
+
+    document.getElementById("scroll-food").innerHTML =
+      food.length
+        ? food.map(buildCard).join("")
+        : `<p style="padding:16px;color:#aaa">No items</p>`;
   }
 }
 
 //////////////////////////////////////////////////////////
-// RENDER ALL PRODUCTS  (replaces your hardcoded renderAll)
-//////////////////////////////////////////////////////////
-
-function renderAll() {
-  const stationery = allProducts.filter(p => stationeryCategories.includes(p.category));
-  const food       = allProducts.filter(p => foodCategories.includes(p.category));
-
-  document.getElementById("scroll-stationery").innerHTML =
-    stationery.length ? stationery.map(buildCard).join("") : "<p style='padding:16px;color:#aaa'>No items</p>";
-
-  document.getElementById("scroll-food").innerHTML =
-    food.length ? food.map(buildCard).join("") : "<p style='padding:16px;color:#aaa'>No items</p>";
-}
-
-//////////////////////////////////////////////////////////
-// ADD TO CART  (your original logic, just uses real DB id)
+// ADD TO CART  (your original logic, untouched)
 //////////////////////////////////////////////////////////
 
 function addToCart(id) {
   const product = allProducts.find(p => p.id === id);
   if (!product || product.stock <= 0) return;
 
-  // Decrease local stock so UI updates instantly
   product.stock--;
 
-  // Save to localStorage cart (same format your cart.html expects)
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
   const existing = cart.find(item => item.id === product.id);
+
   if (existing) {
     existing.q += 1;
   } else {
@@ -139,14 +170,9 @@ function addToCart(id) {
   }
 
   localStorage.setItem("cart", JSON.stringify(cart));
-
-  // Update badge
   updateCartBadge();
-
-  // Re-render so stock count updates on screen
   renderAll();
 
-  // Toast
   const toast = document.getElementById("cartToast");
   toast.textContent = `${product.name} added to cart`;
   toast.classList.add("show");
@@ -165,6 +191,30 @@ function updateCartBadge() {
 }
 
 //////////////////////////////////////////////////////////
+// LOAD PRODUCTS FROM BACKEND
+//////////////////////////////////////////////////////////
+
+async function loadProducts() {
+  try {
+    const res  = await fetch(`${API}/products`);
+    const data = await res.json();
+
+    allProducts = data.map(p => ({
+      ...p,
+      price: parseFloat(p.price),
+      emoji: categoryEmoji[p.category] || "🛍️"
+    }));
+
+    renderAll();
+    updateCartBadge();
+
+  } catch (err) {
+    document.getElementById("scroll-stationery").innerHTML =
+      "<p style='padding:16px;color:#aaa'>Could not load products. Is the server running?</p>";
+  }
+}
+
+//////////////////////////////////////////////////////////
 // ORDERS BADGE  (your original code, untouched)
 //////////////////////////////////////////////////////////
 
@@ -173,10 +223,10 @@ function updateOrdersBadge() {
   if (!badge) return;
   const unseen = parseInt(localStorage.getItem("unseenOrders") || "0");
   if (unseen > 0) {
-    badge.textContent    = unseen;
-    badge.style.display  = "grid";
+    badge.textContent   = unseen;
+    badge.style.display = "grid";
   } else {
-    badge.style.display  = "none";
+    badge.style.display = "none";
   }
 }
 
@@ -184,5 +234,6 @@ function updateOrdersBadge() {
 // INIT
 //////////////////////////////////////////////////////////
 
-loadProducts();       // fetch from backend and render
+loadProducts();
+setupSearch();  // ← connects search bar
 updateOrdersBadge();
