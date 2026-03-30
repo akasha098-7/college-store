@@ -2,7 +2,7 @@ const db     = require("../db");
 const bcrypt = require("bcrypt");
 const jwt    = require("jsonwebtoken");
 
-const JWT_SECRET = "quickpick_secret_2026"; // move to .env later
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // ─── LOGIN ────────────────────────────────────────────────────────────────────
 // POST /api/auth/login
@@ -18,7 +18,7 @@ exports.login = (req, res) => {
   db.query(sql, [admission_number], async (err, results) => {
     if (err) {
       console.error("Login DB Error:", err);
-      return res.status(500).json({ success: false, message: "Database error" });
+      return res.status(500).json({ success: false, message: err.message });
     }
 
     if (results.length === 0) {

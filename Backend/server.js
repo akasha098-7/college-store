@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 // ✅ TEST PUT (keep this always for debugging)
-app.put('/test-direct', (req, res) => {
+app.put('/test-direct', (req, res) => {                                      
   console.log("🔥 MAIN SERVER PUT HIT");
   res.send("MAIN SERVER WORKING");
 });
