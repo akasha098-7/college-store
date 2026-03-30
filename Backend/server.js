@@ -1,31 +1,42 @@
+require('dotenv').config({ path: __dirname + '/.env' });
+console.log("ENV TEST:", process.env.JWT_SECRET);
 const express = require('express');
-const db = require('./db');
 const cors = require('cors');
 
 const app = express();
-app.use(cors({
-  origin: ['http://127.0.0.1:5500', 'http://localhost:5500'],
-  credentials: true
-}));
+
+console.log("🚀 CLEAN SERVER RUNNING");
+const fs = require('fs');
+
+console.log("ENV FILE EXISTS:", fs.existsSync(__dirname + '/.env'));
+// ✅ MIDDLEWARE
+app.use(cors());
 app.use(express.json());
 
-// 1. Import Routes
+// ✅ TEST PUT (keep this always for debugging)
+app.put('/test-direct', (req, res) => {
+  console.log("🔥 MAIN SERVER PUT HIT");
+  res.send("MAIN SERVER WORKING");
+});
+
+// ✅ IMPORT ROUTES
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
 
-// 2. Use Routes
-// Note: We use '/api' to keep things consistent for your teammates
+// ✅ USE ROUTES (VERY IMPORTANT ORDER)
 app.use('/api/auth', authRoutes);
-app.use('/api', productRoutes);
+app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/categories', categoryRoutes);
 
-// 3. Simple Status Check
+// ✅ HOME
 app.get('/', (req, res) => {
-    res.send('College Store Backend is Running!');
+  res.send('College Store Backend is Running!');
 });
 
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+// ✅ START
+app.listen(3000, () => {
+  console.log("Server running on http://localhost:3000");
 });
