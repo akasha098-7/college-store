@@ -8,17 +8,39 @@ exports.getAllProducts = (req, res) => {
   });
 };
 
-// ADD product (used by admin)
+// ADD product (admin)
 exports.addProduct = (req, res) => {
   const { name, price, stock, category } = req.body;
+  if (!name || !category) return res.status(400).json({ message: "Name and category required" });
+  db.query(
+    "INSERT INTO products (name, price, stock, category) VALUES (?, ?, ?, ?)",
+    [name, price || 0, stock || 0, category],
+    (err, result) => {
+      if (err) return res.status(500).json({ error: err });
+      res.json({ message: "Product added successfully!", id: result.insertId });
+    }
+  );
+};
 
-  if (!name || !price || !stock || !category) {
-    return res.status(400).json({ message: "All fields required: name, price, stock, category" });
-  }
+// UPDATE product (admin)
+exports.updateProduct = (req, res) => {
+  const { id } = req.params;
+  const { name, price, stock, category } = req.body;
+  db.query(
+    "UPDATE products SET name=?, price=?, stock=?, category=? WHERE id=?",
+    [name, price, stock, category, id],
+    (err) => {
+      if (err) return res.status(500).json({ error: err });
+      res.json({ message: "Product updated successfully!" });
+    }
+  );
+};
 
-  const sql = "INSERT INTO products (name, price, stock, category) VALUES (?, ?, ?, ?)";
-  db.query(sql, [name, price, stock, category], (err, result) => {
+// DELETE product (admin)
+exports.deleteProduct = (req, res) => {
+  const { id } = req.params;
+  db.query("DELETE FROM products WHERE id=?", [id], (err) => {
     if (err) return res.status(500).json({ error: err });
-    res.json({ message: "Product added successfully!", id: result.insertId });
+    res.json({ message: "Product deleted successfully!" });
   });
 };

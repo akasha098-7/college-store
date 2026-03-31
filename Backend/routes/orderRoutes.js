@@ -2,35 +2,26 @@ const express = require("express");
 const router  = express.Router();
 const jwt     = require("jsonwebtoken");
 const orderController = require("../controllers/orderController");
-console.log("orderController:", orderController);
-const JWT_SECRET = process.env.JWT_SECRET;
 
-// ─── AUTH MIDDLEWARE ──────────────────────────────────────────────────────────
+const JWT_SECRET = process.env.JWT_SECRET || "quickpick_secret_2026";
+
+// Auth middleware
 function authenticate(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-
-  console.log("TOKEN:", token);
-  console.log("SECRET:", process.env.JWT_SECRET);
-console.log("🔥 ORDER ROUTES LOADED");
-  if (!token) {
-    return res.status(401).json({ message: "Login required" });
-  }
-
-  try {
-    req.user = jwt.verify(token, process.env.JWT_SECRET);
-    next();
-  } catch (err) {
-    console.log("JWT ERROR:", err.message);
-    res.status(403).json({ message: "Session expired. Please log in again." });
-  }
+  const token = req.headers["authorization"]?.split(" ")[1];
+  if (!token) return res.status(401).json({ message: "Login required" });
+  try { req.user = jwt.verify(token, JWT_SECRET); next(); }
+  catch { res.status(403).json({ message: "Session expired" }); }
 }
 
-// ─── ROUTES ───────────────────────────────────────────────────────────────────
-router.get('/test', orderController.testOrdersRaw);
-router.post("/",    authenticate, orderController.placeOrder);   // POST /api/orders
-router.get("/my",   authenticate, orderController.getMyOrders);  // GET  /api/orders/my
-router.get('/', authenticate, orderController.getAllOrders);
-router.put('/:id', authenticate, orderController.updateOrderStatus);
+function adminOnly(req, res, next) {
+  if (req.user.role !== "admin") return res.status(403).json({ message: "Admin only" });
+  next();
+}
+
+router.post("/",           authenticate, orderController.placeOrder);
+router.get("/my",          authenticate, orderController.getMyOrders);
+router.get("/all",         authenticate, adminOnly, orderController.getAllOrders);      // ✅ admin
+router.put("/:id/status",  authenticate, adminOnly, orderController.updateOrderStatus); // ✅ admin
+router.get("/test",        orderController.testOrdersRaw);
 
 module.exports = router;
